@@ -14,92 +14,32 @@
 <body>
     <script>
 
-        // const data = null;
-
         const request = new XMLHttpRequest();
         request.withCredentials = true;
 
         request.addEventListener("readystatechange", function () {
-            // result = request.responseText;
             if (request.readyState == 4 && request.status == 200) {
-
-                // Step 5: wait for done + success
-                console.log("5 - response received");
                 result = request.responseText;
-                alert(result);
-                weather = JSON.parse(result);
+                hs = JSON.parse(result);
 
-                document.getElementById("data").innerHTML = "current temp in boston: " + weather["current"]["temp"];
-
+                $("#data").append("<p>Classes: " + hs['classes'].join(", ") + "</p>");
+                $("#data").append("<p>Expansions: " + hs['sets'].join(", ")  + "</p>");
             }
-            else if (request.readyState == 4 && request.status != 200) {
-
-                document.getElementById("data").innerHTML = "Something is wrong!  Check the logs to see where this went off the rails";
-
-            }
-
-            else if (request.readyState == 3) {
-
-                document.getElementById("data").innerHTML = "Too soon!  Try again";
-
-            }
-
         });
 
-        request.open("GET", "https://omgvamp-hearthstone-v1.p.rapidapi.com/info");
+        request.open("GET", "https://omgvamp-hearthstone-v1.p.rapidapi.com/info", true);
         request.setRequestHeader("x-rapidapi-key", "d04397ed8fmsh04d7f57d414d67bp1a307ajsn484bdeb0f701");
         request.setRequestHeader("x-rapidapi-host", "omgvamp-hearthstone-v1.p.rapidapi.com");
 
-        // request.send(data);
-
-        // var url = 'https://newsapi.org/v2/top-headlines?' +
-        //     'country=us&' +
-        //     'apiKey=15770802ec0a4d03b0aacf65167202de';
-        // request = new XMLHttpRequest();
-        // console.log("1 - request object created");
-
-        // // Step 2: Set the URL for the AJAX request to be the JSON file
-
-        // request.open("GET", url, true)
-
-        // console.log("2 - opened request file");
-
-        // // Step 3: set up event handler/callback
-
-        // request.onreadystatechange = function () {
-        //     console.log("3 - readystatechange event fired.");
-
-        //     if (request.readyState == 4 && request.status == 200) {
-
-        //         // Step 5: wait for done + success
-        //         console.log("5 - response received");
-        //         result = request.responseText;
-        //         alert(result);
-        //         news = JSON.parse(result);
-
-        //         document.getElementById("data").innerHTML = "current temp in boston: " + news["current"]["temp"];
-
-        //     }
-        //     else if (request.readyState == 4 && request.status != 200) {
-
-        //         document.getElementById("data").innerHTML = "Something is wrong!  Check the logs to see where this went off the rails";
-
-        //     }
-
-        //     else if (request.readyState == 3) {
-
-        //         document.getElementById("data").innerHTML = "Too soon!  Try again";
-
-        //     }
-
-        // }
-        // // Step 4: fire off the HTTP request
-        // request.send();
-        // console.log("4 - Request sent");
-
-
-
+        request.send();
     </script>
+    
+    <div id="data"></div>
+    <h2>API: The api selected gives updated information about an online card game that I play.</h2>
+    <h2>Citation: I found this api on rapid api at https://rapidapi.com/omgvamp/api/hearthstone?endpoint=5525c47de4b0b69ffe83f7bd</h2>
+    <h2>Options: This api does not request any parameters</h2>
+    <h2>Applications: This application could be useful for a news website that gives current information about the game. This api could also be useful for a website that discusses the statistics of each card. </h2>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
