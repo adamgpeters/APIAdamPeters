@@ -13,20 +13,57 @@
 
 <body>
     <script>
-        var url = 'http://newsapi.org/v2/top-headlines?' +
+        var url = 'https://newsapi.org/v2/top-headlines?' +
             'country=us&' +
             'apiKey=15770802ec0a4d03b0aacf65167202de';
-        $.get(url,
-            function (data) {
-                str = JSON.stringify(data);
-                document.write(str);
-                strHTML = "";
-            })
+        request = new XMLHttpRequest();
+        console.log("1 - request object created");
+
+        // Step 2: Set the URL for the AJAX request to be the JSON file
+
+        request.open("GET", url, true)
+
+        console.log("2 - opened request file");
+
+        // Step 3: set up event handler/callback
+
+        request.onreadystatechange = function () {
+            console.log("3 - readystatechange event fired.");
+
+            if (request.readyState == 4 && request.status == 200) {
+
+                // Step 5: wait for done + success
+                console.log("5 - response received");
+                result = request.responseText;
+                alert(result);
+                news = JSON.parse(result);
+
+                document.getElementById("data").innerHTML = "current temp in boston: " + news["current"]["temp"];
+
+            }
+            else if (request.readyState == 4 && request.status != 200) {
+
+                document.getElementById("data").innerHTML = "Something is wrong!  Check the logs to see where this went off the rails";
+
+            }
+
+            else if (request.readyState == 3) {
+
+                document.getElementById("data").innerHTML = "Too soon!  Try again";
+
+            }
+
+        }
+        // Step 4: fire off the HTTP request
+        request.send();
+        console.log("4 - Request sent");
+
+
 
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
 
 </body>
 
