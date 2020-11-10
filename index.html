@@ -13,50 +13,69 @@
 
 <body>
     <script>
-        var url = 'https://newsapi.org/v2/top-headlines?' +
-            'country=us&' +
-            'apiKey=15770802ec0a4d03b0aacf65167202de';
-        request = new XMLHttpRequest();
-        console.log("1 - request object created");
 
-        // Step 2: Set the URL for the AJAX request to be the JSON file
+        // const data = null;
 
-        request.open("GET", url, true)
+        const request = new XMLHttpRequest();
+        request.withCredentials = true;
 
-        console.log("2 - opened request file");
-
-        // Step 3: set up event handler/callback
-
-        request.onreadystatechange = function () {
-            console.log("3 - readystatechange event fired.");
-
-            if (request.readyState == 4 && request.status == 200) {
-
-                // Step 5: wait for done + success
-                console.log("5 - response received");
-                result = request.responseText;
-                alert(result);
-                news = JSON.parse(result);
-
-                document.getElementById("data").innerHTML = "current temp in boston: " + news["current"]["temp"];
-
+        request.addEventListener("readystatechange", function () {
+            result = request.responseText;
+            if (this.readyState === this.DONE) {
+                console.log(this.responseText);
             }
-            else if (request.readyState == 4 && request.status != 200) {
+        });
 
-                document.getElementById("data").innerHTML = "Something is wrong!  Check the logs to see where this went off the rails";
+        request.open("GET", "https://omgvamp-hearthstone-v1.p.rapidapi.com/info");
+        request.setRequestHeader("x-rapidapi-key", "d04397ed8fmsh04d7f57d414d67bp1a307ajsn484bdeb0f701");
+        request.setRequestHeader("x-rapidapi-host", "omgvamp-hearthstone-v1.p.rapidapi.com");
 
-            }
+        // request.send(data);
 
-            else if (request.readyState == 3) {
+        // var url = 'https://newsapi.org/v2/top-headlines?' +
+        //     'country=us&' +
+        //     'apiKey=15770802ec0a4d03b0aacf65167202de';
+        // request = new XMLHttpRequest();
+        // console.log("1 - request object created");
 
-                document.getElementById("data").innerHTML = "Too soon!  Try again";
+        // // Step 2: Set the URL for the AJAX request to be the JSON file
 
-            }
+        // request.open("GET", url, true)
 
-        }
-        // Step 4: fire off the HTTP request
-        request.send();
-        console.log("4 - Request sent");
+        // console.log("2 - opened request file");
+
+        // // Step 3: set up event handler/callback
+
+        // request.onreadystatechange = function () {
+        //     console.log("3 - readystatechange event fired.");
+
+        //     if (request.readyState == 4 && request.status == 200) {
+
+        //         // Step 5: wait for done + success
+        //         console.log("5 - response received");
+        //         result = request.responseText;
+        //         alert(result);
+        //         news = JSON.parse(result);
+
+        //         document.getElementById("data").innerHTML = "current temp in boston: " + news["current"]["temp"];
+
+        //     }
+        //     else if (request.readyState == 4 && request.status != 200) {
+
+        //         document.getElementById("data").innerHTML = "Something is wrong!  Check the logs to see where this went off the rails";
+
+        //     }
+
+        //     else if (request.readyState == 3) {
+
+        //         document.getElementById("data").innerHTML = "Too soon!  Try again";
+
+        //     }
+
+        // }
+        // // Step 4: fire off the HTTP request
+        // request.send();
+        // console.log("4 - Request sent");
 
 
 
