@@ -20,10 +20,30 @@
         request.withCredentials = true;
 
         request.addEventListener("readystatechange", function () {
-            result = request.responseText;
-            if (this.readyState === this.DONE) {
-                console.log(this.responseText);
+            // result = request.responseText;
+            if (request.readyState == 4 && request.status == 200) {
+
+                // Step 5: wait for done + success
+                console.log("5 - response received");
+                result = request.responseText;
+                alert(result);
+                weather = JSON.parse(result);
+
+                document.getElementById("data").innerHTML = "current temp in boston: " + weather["current"]["temp"];
+
             }
+            else if (request.readyState == 4 && request.status != 200) {
+
+                document.getElementById("data").innerHTML = "Something is wrong!  Check the logs to see where this went off the rails";
+
+            }
+
+            else if (request.readyState == 3) {
+
+                document.getElementById("data").innerHTML = "Too soon!  Try again";
+
+            }
+
         });
 
         request.open("GET", "https://omgvamp-hearthstone-v1.p.rapidapi.com/info");
